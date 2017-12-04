@@ -25,7 +25,7 @@ def main(client,fileObject):
 if __name__ == '__main__':
   adwords_client = adwords.AdWordsClient.LoadFromStorage()
   file = open("daily_report.csv",'w')
-  clientList = ['XXX-XXX-XXXX','XXX-XXX-XXXX']
+  clientList = ['XXX-XXX-XXXX','XXX-XXX-XXXX'] #Replace it with your AdWords Customer Account number
   numberOfAccounts = len(clientList)
 
   for i in range(0,numberOfAccounts):
