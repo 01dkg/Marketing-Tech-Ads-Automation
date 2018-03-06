@@ -40,3 +40,32 @@ class ReportDefinition:
         if self.predicates is not None:
             report_def["selector"]["predicates"] = self.predicates
         return report_def
+    
+    ##################################################################
+    #
+    # Date Functions to Adjust Time period in report definations
+    #
+    #####################################################################
+    def _determine_dates(self):
+        self._validate_inputs()
+
+        if self.last_days is not None:
+            self._calculate_dates_from_relative()
+        self._standardize_date_format()
+
+    def _validate_inputs(self):
+        dates_are_relative = self.last_days is not None
+        dates_are_absolute = (self.date_min is not None) or (self.date_max is not None)
+
+        assert dates_are_relative or dates_are_absolute, "No time range specified."
+        assert not (dates_are_relative and dates_are_absolute), "Either absolute dates or relative dates."
+
+    def _calculate_dates_from_relative(self):
+        today = datetime.date.today()
+        self.date_max = (today - datetime.timedelta(1)).isoformat()
+        self.date_min = (today - datetime.timedelta(self.last_days)).isoformat()
+        self.last_days = None
+
+    def _standardize_date_format(self):
+        self.date_min = self.date_min.replace("-", "")
+        self.date_max = self.date_max.replace("-", "")
