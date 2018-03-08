@@ -34,3 +34,8 @@ def main(client):
     selector['paging']['startIndex'] = str(offset)
     more_pages = offset < int(page['totalNumEntries'])
     time.sleep(1)
+
+    if __name__ == '__main__':
+  adwords_client = adwords.AdWordsClient.LoadFromStorage()
+  main(adwords_client)
+
