@@ -18,8 +18,5 @@ def main(client):
   'downloadFormat': 'CSV',
   'selector': {
           'fields': ['Date','CampaignId','AdGroupId','ClickType','Conversions']
-          'fields': ['Date','CampaignId', 'AdGroupId','Device','AdNetworkType2','Slot']
-          'fields': ['Date','CampaignId', 'AdGroupId','Device','AdNetworkType2','Slot']
-          'fields': ['Date','CampaignId', 'AdGroupId','Device','AdNetworkType2','Slot']
       }
   }
