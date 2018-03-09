@@ -20,3 +20,14 @@ def main(client):
           'fields': ['Date','CampaignId','AdGroupId','ClickType','Conversions']
       }
   }
+
+  data=report_downloader.DownloadReport(
+      report, f, skip_report_header=True, skip_column_header=False,
+      skip_report_summary=True, include_zero_impressions=False)
+  f.close()
+
+if __name__ == '__main__':
+  adwords_client = adwords.AdWordsClient.LoadFromStorage()
+  adwords_client.SetClientCustomerId('XXX-XXX-XXXX')
+  main(adwords_client)
+
