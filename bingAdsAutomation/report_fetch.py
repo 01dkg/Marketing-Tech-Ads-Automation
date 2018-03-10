@@ -48,3 +48,37 @@ def custom_date(dateVar,start_end_object):
     start_end_object.Month = dateVar.month
     start_end_object.Year = dateVar.year
     return start_end_object
+
+def AdGroupPerformanceReport(accountID, accountName):
+    report_request=reporting_service.factory.create('AdGroupPerformanceReportRequest')
+    report_request.Format=REPORT_FILE_FORMAT
+    report_request.ReportName='AdGroup Performance Report'
+    report_request.ReturnOnlyCompleteData=False
+    report_request.Language='English'
+
+    report_aggregation=reporting_service.factory.create('ReportAggregation')
+    report_request.Aggregation = 'Daily'
+
+    #report_request=reporting_service.factory.create('ReportTimePeriod')
+    #report_request.ReportTimePeriod = 'Weekly'
+
+    scope=reporting_service.factory.create('AccountThroughAdGroupReportScope')
+    scope.AccountIds={'long': accountID}
+    scope.AdGroups=None
+    report_request.Scope=scope
+    
+    #Data from last 14 days
+    report_time=reporting_service.factory.create('ReportTime')
+
+    custom_date_range_start=reporting_service.factory.create('Date')
+
+    custom_date_range_start.Day= FROM_DATE.day
+    custom_date_range_start.Month=FROM_DATE.month
+    custom_date_range_start.Year=FROM_DATE.year
+    report_time.CustomDateRangeStart=custom_date_range_start
+    custom_date_range_end=reporting_service.factory.create('Date')
+    custom_date_range_end.Day=TO_DATE.day
+    custom_date_range_end.Month=TO_DATE.month
+    custom_date_range_end.Year=TO_DATE.year
+    report_time.CustomDateRangeEnd=custom_date_range_end
+    report_time.PredefinedTime=None
