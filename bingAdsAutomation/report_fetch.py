@@ -37,3 +37,14 @@ def main(authorization_data,accountID,accountName):
         reporting_operation=reporting_service_manager.submit_download(report_request);
         request_id=reporting_operation.request_id;
         print("Report Request ID", request_id)
+        output_status_message("Program execution completed")
+
+    except WebFault as ex:
+        output_webfault_errors(ex)
+    except Exception as ex:
+        output_status_message(ex)
+def custom_date(dateVar,start_end_object):
+    start_end_object.Day = dateVar.day
+    start_end_object.Month = dateVar.month
+    start_end_object.Year = dateVar.year
+    return start_end_object
