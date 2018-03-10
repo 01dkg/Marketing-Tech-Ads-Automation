@@ -31,3 +31,6 @@ def main(authorization_data,accountID,accountName):
             overwrite_result_file = True, 
             timeout_in_milliseconds=TIMEOUT_IN_MILLISECONDS 
         )
+
+        output_status_message("Awaiting Background Completion . . .");
+        background_completion(reporting_download_parameters)
