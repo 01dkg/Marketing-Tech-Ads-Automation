@@ -82,3 +82,41 @@ def AdGroupPerformanceReport(accountID, accountName):
     custom_date_range_end.Year=TO_DATE.year
     report_time.CustomDateRangeEnd=custom_date_range_end
     report_time.PredefinedTime=None
+    report_request.Time=report_time
+
+    # Specify the attribute and data report columns.
+    if accountID ==XXXXXXX and accountName=='XXXXXXXXXXXXX': #Betfair
+        cols=['AccountName',
+              'TimePeriod',
+              'Network',
+              'DeviceType',
+              'CampaignName',
+              'AdGroupName',
+              'Impressions',
+              'Clicks',
+              'Spend',
+              'Conversions',
+              'AveragePosition']
+
+    elif accountID ==XXXXXXX and accountName == 'XXXXXXXXXXXXX': #bidvine
+        cols=['AccountName',
+              'TimePeriod',
+              'DeviceType',
+              'CampaignName',
+              'AdGroupName',
+              'Impressions',
+              'Clicks',
+              'Spend',
+              'AveragePosition',
+              'Conversions',]
+    else:
+        cols=['AccountName',
+              'AccountId',
+              'TimePeriod',
+              'DeviceType',
+              'CampaignName',
+              'AdGroupName',
+              'Impressions',
+              'Clicks',
+              'Spend',
+              'Conversions',]
