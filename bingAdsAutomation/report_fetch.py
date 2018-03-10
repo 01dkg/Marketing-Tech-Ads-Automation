@@ -120,3 +120,8 @@ def AdGroupPerformanceReport(accountID, accountName):
               'Clicks',
               'Spend',
               'Conversions',]
+
+    report_columns=reporting_service.factory.create('ArrayOfAdGroupPerformanceReportColumn')
+    report_columns.AdGroupPerformanceReportColumn.append(cols)
+    report_request.Columns=report_columns
+    return report_request
