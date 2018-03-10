@@ -34,3 +34,6 @@ def main(authorization_data,accountID,accountName):
 
         output_status_message("Awaiting Background Completion . . .");
         background_completion(reporting_download_parameters)
+        reporting_operation=reporting_service_manager.submit_download(report_request);
+        request_id=reporting_operation.request_id;
+        print("Report Request ID", request_id)
