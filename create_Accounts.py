@@ -17,4 +17,17 @@ def main(client):
           'dateTimeZone': 'Europe/London',
       },
 
-  
+  # Create the account. It is possible to create multiple accounts with one
+  # request by sending an array of operations.
+  accounts = managed_customer_service.mutate(operations)
+
+  # Display results.
+  for account in accounts['value']:
+    print ('Account with customer ID "%s" was successfully created.'
+           % account['customerId'])
+
+
+if __name__ == '__main__':
+  # Initialize client object.
+  adwords_client = adwords.AdWordsClient.LoadFromStorage()
+  main(adwords_client)
