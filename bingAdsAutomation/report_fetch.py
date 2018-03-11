@@ -177,3 +177,18 @@ def AdGroupPerformanceReport(accountID, accountName):
     result_file_path = reporting_service_manager.download_file(reporting_download_parameters)
     output_status_message("Download result file: {0}\n".format(result_file_path))
 
+def submit_and_download(report_request):
+    global reporting_service_manager
+    reporting_download_operation = reporting_service_manager.submit_download(report_request)
+
+    reporting_operation_status = reporting_download_operation.track(timeout_in_milliseconds=TIMEOUT_IN_MILLISECONDS)
+
+    result_file_path = reporting_download_operation.download_result_file(
+        result_file_directory = FILE_DIRECTORY, 
+        result_file_name = DOWNLOAD_FILE_NAME, 
+        decompress = True, 
+        overwrite = True,  
+        timeout_in_milliseconds=TIMEOUT_IN_MILLISECONDS 
+    )
+    
+    output_status_message("Download result file: {0}\n".format(result_file_path))
