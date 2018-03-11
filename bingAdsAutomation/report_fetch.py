@@ -172,3 +172,8 @@ def AdGroupPerformanceReport(accountID, accountName):
     report_request.Columns = report_columns
     return report_request
    
+   def background_completion(reporting_download_parameters):
+    global reporting_service_manager
+    result_file_path = reporting_service_manager.download_file(reporting_download_parameters)
+    output_status_message("Download result file: {0}\n".format(result_file_path))
+
