@@ -192,3 +192,55 @@ def submit_and_download(report_request):
     )
     
     output_status_message("Download result file: {0}\n".format(result_file_path))
+
+def download_results(request_id, authorization_data):
+    reporting_download_operation = ReportingDownloadOperation(
+        request_id = request_id, 
+        authorization_data=authorization_data, 
+        poll_interval_in_milliseconds=1000, 
+        environment=ENVIRONMENT,
+    )
+
+    reporting_operation_status = reporting_download_operation.track(timeout_in_milliseconds=TIMEOUT_IN_MILLISECONDS)
+    
+    result_file_path = reporting_download_operation.download_result_file(
+        result_file_directory = FILE_DIRECTORY, 
+        result_file_name = DOWNLOAD_FILE_NAME, 
+        decompress = True, 
+        overwrite = True,  
+        timeout_in_milliseconds=TIMEOUT_IN_MILLISECONDS 
+    ) 
+
+    output_status_message("Download result file: {0}".format(result_file_path))
+    output_status_message("Status: {0}\n".format(reporting_operation_status.status))
+
+if __name__ == '__main__':
+
+    print("Python loads the web service proxies at runtime, so you will observe " \
+          "a performance delay between program launch and main execution...\n")
+    
+    authorization_data=AuthorizationData(
+        account_id=None,
+        customer_id=None,
+        developer_token=DEVELOPER_TOKEN,
+        authentication=None,
+    )
+
+    reporting_service_manager=ReportingServiceManager(
+        authorization_data=authorization_data, 
+        poll_interval_in_milliseconds=5000, 
+        environment=ENVIRONMENT,
+    )
+
+    reporting_service=ServiceClient(
+        'ReportingService', 
+        authorization_data=authorization_data, 
+        environment=ENVIRONMENT,
+        version=11,
+    )
+
+    authenticate(authorization_data)
+    accountID = [XXXXX,XXXXX,XXXXX,XXXXX]
+    accountName = ['XXXXXXXXXXXXX','XXXXXXXXXXXXX','XXXXXXXXXXXXX', 'XXXXXXXXXXXXX']
+    for i in range(0,len(accountID)):
+        main(authorization_data,accountID[i],accountName[i])
