@@ -125,3 +125,50 @@ def AdGroupPerformanceReport(accountID, accountName):
     report_columns.AdGroupPerformanceReportColumn.append(cols)
     report_request.Columns=report_columns
     return report_request
+
+ def GoalReport(accountID, accountName):
+    report_request = reporting_service.factory.create('GoalsAndFunnelsReportRequest')
+    report_request.Format = REPORT_FILE_FORMAT
+    report_request.ReportName = 'Goals Report'
+    report_request.ReturnOnlyCompleteData = False
+    report_request.Language = 'English'
+
+    report_aggregation = reporting_service.factory.create('NonHourlyReportAggregation')
+    report_request.Aggregation = 'Daily'
+
+    # report_request=reporting_service.factory.create('ReportTimePeriod')
+    # report_request.ReportTimePeriod = 'Weekly'
+
+    scope = reporting_service.factory.create('AccountThroughAdGroupReportScope')
+    scope.AccountIds = {'long': accountID}
+    scope.AdGroups = None
+    report_request.Scope = scope
+
+    # Data from last 14 days
+    report_time = reporting_service.factory.create('ReportTime')
+    start_date = reporting_service.factory.create('Date')
+    report_time.CustomDateRangeStart = custom_date(FROM_DATE,start_date)
+
+    end_date = reporting_service.factory.create('Date')
+    report_time.CustomDateRangeEnd = custom_date(TO_DATE,start_date)
+    report_time.PredefinedTime = None
+
+    # report_time.PredefinedTime='LastFourWeeks'
+    report_request.Time = report_time
+    print(accountName)
+
+    if accountID == XXXXXXXX and accountName == 'XXXXXXXXXXX':  # TVG Last 30 Days
+        cols = ['AccountName',
+                'TimePeriod',
+                'DeviceType',
+                'Goal',
+                'CampaignName',
+                'AdGroupName',
+                'Conversions',]
+
+
+    report_columns = reporting_service.factory.create('ArrayOfGoalsAndFunnelsReportColumn')
+    report_columns.GoalsAndFunnelsReportColumn.append(cols)
+    report_request.Columns = report_columns
+    return report_request
+   
