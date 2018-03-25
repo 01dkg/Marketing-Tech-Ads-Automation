@@ -6,6 +6,24 @@ __pycache__/
 # C extensions
 *.so
 
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -52,6 +70,8 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# pyenv
+.python-version
 
 # celery beat schedule file
 celerybeat-schedule
@@ -59,7 +79,13 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
+# dotenv
+.env
 
+# virtualenv
+.venv
+venv/
+ENV/
 
 # Spyder project settings
 .spyderproject
