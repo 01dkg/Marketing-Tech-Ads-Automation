@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Python Flask Bucket List App</title>
+
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    
+    <script src="../static/js/jquery-1.11.2.js"></script>
+
+	<script src="../static/js/jquery.ui.widget.js"></script>
+	
+	<script type="text/javascript" src="../static/js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="../static/js/jquery.fileupload-process.js"></script>
+	<script type="text/javascript" src="../static/js/jquery.fileupload-ui.js"></script>
+	
+	    
+        <script>
+		$(function(){
+			    $('#fileupload').fileupload({
+        			url: 'upload',
+        			dataType: 'json',
+        			add: function (e, data) {
+        				data.submit();
+        			},
+			        success:function(response,status) {
+					console.log(response.filename);
+					var filePath = 'static/Uploads/' + response.filename;
+					$('#imgUpload').attr('src',filePath);
+					$('#filePath').val(filePath);
+			        	console.log('success');
+			        },
+			        error:function(error){
+			        	console.log(error);
+			        }
+    			});
+		})
+	</script>
+
+    <style>
+	.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+    </style>
+   
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+	    <li role="presentation"><a href="/showDashboard">Dasboard</a></li>
+	     <li role="presentation"><a href="/userHome">Home</a></li>
+	    <li role="presentation" class="active"><a href="#">Add Item</a></li>
+            <li role="presentation" ><a href="/logout">Logout</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Python Flask App</h3>
+      </div>
+     
+
+	<div class="well">
+      <form role="form" method="post" action="/addWish">
+
+
+<!-- Form Name -->
+<legend>Create Your Wish</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label  for="txtTitle">Title</label>  
+  
+  <input id="txtTitle" name="inputTitle" type="text" placeholder="placeholder" class="form-control input-md">
+  
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label for="txtPost">Description</label>
+                     
+    <textarea class="form-control" id="txtPost" name="inputDescription" ></textarea>
+  
+</div>
+
+
+<div class="form-group">
+  <label for="txtPost">Photos</label>
+                     
+<div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Browse&hellip; <input type="file" id="fileupload" name="file" multiple>
+                    </span>
+                </span>
+		<div class="pull-right">
+                <img  id="imgUpload" style="width: 140px; height: 140px;" class="img-thumbnail"><input type="hidden" name="filePath" id="filePath"></input>
+		</div>
+            </div>
+  
+</div>
+
+<div class="form-group">
+<label>Mark this as private and not visible to others.</label><br/>
+<input name="private" type="checkbox"> Mark as Private <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+</div>
+
+<div class="form-group">
+<label>Have you already accomplished this?</label><br/>
+<input name="done" type="checkbox"> Mark as Done <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+</div>
+
+
+
+
+<!-- Button -->
+<div class="form-group">
+  
+    <p class="text-center">
+    <input id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Publish" />
+  	</p>
+</div>
+
+
+</form>
+
+</div>
+
+
+      
+
+      <footer class="footer">
+        <p>&copy; Company 2015</p>
+      </footer>
+
+    </div>
+  </body>
+</html>
+
