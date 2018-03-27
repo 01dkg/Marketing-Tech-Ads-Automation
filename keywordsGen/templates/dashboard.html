@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Python Flask Bucket List App</title>
+
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    
+    <script src="../static/js/jquery-1.11.2.js"></script>
+
+	
+	
+	    
+        <script>
+		$(function(){
+			    $.ajax({
+        			url: '/getAllWishes',
+				type: 'GET',
+			        success:function(response) {
+					console.log(response);
+					var data = JSON.parse(response);
+					var itemsPerRow = 0;
+					var div = $('<div>').attr('class','row');
+					for(var i=0;i<data.length;i++){
+						console.log(data[i].Title);
+						
+					    
+						if(itemsPerRow<3){
+							console.log(i);
+							if(i==data.length-1){
+								div.append(CreateThumb(data[i].Id,data[i].Title,data[i].Description,data[i].FilePath,data[i].Like,data[i].HasLiked));
+								$('.well').append(div);
+							}
+							else{
+							div.append(CreateThumb(data[i].Id,data[i].Title,data[i].Description,data[i].FilePath,data[i].Like,data[i].HasLiked));
+							itemsPerRow++;
+							}
+						}
+						else{
+							$('.well').append(div);
+							div = $('<div>').attr('class','row');
+							div.append(CreateThumb(data[i].Id,data[i].Title,data[i].Description,data[i].FilePath,data[i].Like,data[i].HasLiked));
+							if(i==data.length-1){
+								$('.well').append(div);
+							}
+							itemsPerRow = 0;
+						}
+					}
+					
+			        },
+			        error:function(error){
+			        	console.log(error);
+			        }
+    			});
+
+			$(document).on('click','[id^="btn_"]',function(){
+				var spId = $(this).attr('id').split('_')[1];
+				//alert($(this).attr('id').split('_')[1]);
+				$.ajax({
+					url: '/addUpdateLike',
+					method: 'POST',
+					data: {wish:$(this).attr('id').split('_')[1],like:1},
+					success: function(response){
+						
+						var obj = JSON.parse(response);
+						
+						if(obj.likeStatus=="1"){
+							console.log(obj.likeStatus);
+							$('#span_'+spId).html('&nbsp;You & '+ (Number(obj.total)-1) + ' Others');
+						}
+						else{
+							$('#span_'+spId).html('&nbsp;'+ obj.total + ' like(s)');
+						}
+					},
+					error: function(error){
+						console.log(error);
+					}
+				});
+			});
+		})
+		function CreateThumb(id,title,desc,filepath,like,hasLiked){
+			var mainDiv = $('<div>').attr('class','col-sm-4 col-md-4');
+			var thumbNail = $('<div>').attr('class','thumbnail');
+			var img = $('<img>').attr({'src':filepath,'data-holder-rendered':true,'style':'height: 150px; width: 150px; display: block'});
+			var caption = $('<div>').attr('class','caption');
+			var title = $('<h3>').text(title);
+			var desc = $('<p>').text(desc);
+			
+
+			var p = $('<p>');
+			var btn = $('<button>').attr({'id':'btn_'+id,'type':'button','class':'btn btn-danger btn-sm'});
+			var span = $('<span>').attr({'class':'glyphicon glyphicon-thumbs-up','aria-hidden':'true'});
+			
+			var likeSpan = $('<span>').attr({'aria-hidden':'true','id':'span_'+id});
+
+			if(hasLiked == "1"){
+				likeSpan.html('&nbsp;You & '+ (Number(like)-1) + ' Others');
+			}
+			else{
+				likeSpan.html('&nbsp;'+ like + ' like(s)');
+			}
+			
+			
+			p.append(btn.append(span));
+			p.append(likeSpan);
+			
+			
+			caption.append(title);
+			caption.append(desc);
+			caption.append(p);
+
+			thumbNail.append(img);
+			thumbNail.append(caption);
+			mainDiv.append(thumbNail);
+			return mainDiv;
+
+			
+		}
+	</script>
+
+    <style>
+	.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+    </style>
+   
+  </head>
+
+  <body>
+
+   <div class="container">
+<div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+	    <li role="presentation" class="active"><a href="#">Dasboard</a></li>
+	    <li role="presentation"><a href="/userHome">My List</a></li>
+	    <li role="presentation"><a href="/showAddWish">Add Item</a></li>
+            <li role="presentation" ><a href="/logout">Logout</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Python Flask App</h3>
+      </div>
+
+
+    
+
+<div class="well">
+
+</div>
+    
+
+      <footer class="footer">
+        <p>&copy; Company 2015</p>
+      </footer>
+
+    </div>
+  </body>
+</html>
+
