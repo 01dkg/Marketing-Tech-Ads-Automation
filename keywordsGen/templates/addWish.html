@@ -40,7 +40,98 @@
     			});
 		})
 	</script>
+  <script>
+      $(document).ready(function() {
 
+          var iCnt = 0;
+          // CREATE A "DIV" ELEMENT AND DESIGN IT USING jQuery ".css()" CLASS.
+          var container = $(document.createElement('div')).css({
+              padding: '5px', margin: '20px', width: '170px', border: '1px dashed',
+              borderTopColor: '#999', borderBottomColor: '#999',
+              borderLeftColor: '#999', borderRightColor: '#999'
+          });
+
+          $('#btAdd').click(function() {
+              if (iCnt <= 19) {
+
+                  iCnt = iCnt + 1;
+
+                  // ADD TEXTBOX.
+                  $(container).append('<input type=text class="input" id=tb' + iCnt + ' ' +
+                      'value="Text Element ' + iCnt + '" />');
+
+                  // SHOW SUBMIT BUTTON IF ATLEAST "1" ELEMENT HAS BEEN CREATED.
+                  if (iCnt == 1) {
+                      var divSubmit = $(document.createElement('div'));
+                      $(divSubmit).append('<input type=button class="bt"' +
+                          'onclick="GetTextValue()"' +
+                              'id=btSubmit value=Submit />');
+                  }
+
+                  // ADD BOTH THE DIV ELEMENTS TO THE "main" CONTAINER.
+                  $('#main').after(container, divSubmit);
+              }
+              // AFTER REACHING THE SPECIFIED LIMIT, DISABLE THE "ADD" BUTTON.
+              // (20 IS THE LIMIT WE HAVE SET)
+              else {
+                  $(container).append('<label>Reached the limit</label>');
+                  $('#btAdd').attr('class', 'bt-disable');
+                  $('#btAdd').attr('disabled', 'disabled');
+              }
+          });
+
+          // REMOVE ONE ELEMENT PER CLICK.
+          $('#btRemove').click(function() {
+              if (iCnt != 0) { $('#tb' + iCnt).remove(); iCnt = iCnt - 1; }
+
+              if (iCnt == 0) {
+                  $(container)
+                      .empty()
+                      .remove();
+
+                  $('#btSubmit').remove();
+                  $('#btAdd')
+                      .removeAttr('disabled')
+                      .attr('class', 'bt');
+              }
+          });
+
+          // REMOVE ALL THE ELEMENTS IN THE CONTAINER.
+          $('#btRemoveAll').click(function() {
+              $(container)
+                  .empty()
+                  .remove();
+
+              $('#btSubmit').remove();
+              iCnt = 0;
+
+              $('#btAdd')
+                  .removeAttr('disabled')
+                  .attr('class', 'bt');
+          });
+      });
+
+      // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
+      var divValue, values = '';
+
+      function GetTextValue() {
+          $(divValue)
+              .empty()
+              .remove();
+
+          values = '';
+
+          $('.input').each(function() {
+              divValue = $(document.createElement('div')).css({
+                  padding:'5px', width:'200px'
+              });
+              values += this.value + '<br />'
+          });
+
+          $(divValue).append('<p><b>Keywords in this list:</b></p>' + values);
+          $('body').append(divValue);
+      }
+  </script>
     <style>
 	.btn-file {
     position: relative;
@@ -77,7 +168,7 @@
             <li role="presentation" ><a href="/logout">Logout</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">Python Flask App</h3>
+        <h3 class="text-muted"><img border="0" alt="ReckonAnalytics" src="images/logo.png" width="150" height="150"></h3>
       </div>
 
 
@@ -91,9 +182,12 @@
 <!-- Text input-->
 <div class="form-group">
   <label  for="txtTitle">List Iteam Name</label>
-
   <input id="txtTitle" name="inputTitle" type="text" placeholder="placeholder" class="form-control input-md">
-
+</div>
+<div id="main">
+        <input type="button" id="btAdd" value="Add Element" class="bt" />
+        <input type="button" id="btRemove" value="Remove Element" class="bt" />
+        <input type="button" id="btRemoveAll" value="Remove All" class="bt" /><br />
 </div>
 
 <!-- Textarea -->

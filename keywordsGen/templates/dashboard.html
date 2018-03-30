@@ -4,16 +4,16 @@
   <head>
     <title>Python Flask Bucket List App</title>
 
-   
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
-    
+
     <script src="../static/js/jquery-1.11.2.js"></script>
 
-	
-	
-	    
+
+
+
         <script>
 		$(function(){
 			    $.ajax({
@@ -26,8 +26,8 @@
 					var div = $('<div>').attr('class','row');
 					for(var i=0;i<data.length;i++){
 						console.log(data[i].Title);
-						
-					    
+
+
 						if(itemsPerRow<3){
 							console.log(i);
 							if(i==data.length-1){
@@ -49,7 +49,7 @@
 							itemsPerRow = 0;
 						}
 					}
-					
+
 			        },
 			        error:function(error){
 			        	console.log(error);
@@ -64,9 +64,9 @@
 					method: 'POST',
 					data: {wish:$(this).attr('id').split('_')[1],like:1},
 					success: function(response){
-						
+
 						var obj = JSON.parse(response);
-						
+
 						if(obj.likeStatus=="1"){
 							console.log(obj.likeStatus);
 							$('#span_'+spId).html('&nbsp;You & '+ (Number(obj.total)-1) + ' Others');
@@ -88,12 +88,12 @@
 			var caption = $('<div>').attr('class','caption');
 			var title = $('<h3>').text(title);
 			var desc = $('<p>').text(desc);
-			
+
 
 			var p = $('<p>');
 			var btn = $('<button>').attr({'id':'btn_'+id,'type':'button','class':'btn btn-danger btn-sm'});
 			var span = $('<span>').attr({'class':'glyphicon glyphicon-thumbs-up','aria-hidden':'true'});
-			
+
 			var likeSpan = $('<span>').attr({'aria-hidden':'true','id':'span_'+id});
 
 			if(hasLiked == "1"){
@@ -102,12 +102,12 @@
 			else{
 				likeSpan.html('&nbsp;'+ like + ' like(s)');
 			}
-			
-			
+
+
 			p.append(btn.append(span));
 			p.append(likeSpan);
-			
-			
+
+
 			caption.append(title);
 			caption.append(desc);
 			caption.append(p);
@@ -117,7 +117,7 @@
 			mainDiv.append(thumbNail);
 			return mainDiv;
 
-			
+
 		}
 	</script>
 
@@ -142,7 +142,7 @@
     display: block;
 }
     </style>
-   
+
   </head>
 
   <body>
@@ -157,16 +157,16 @@
             <li role="presentation" ><a href="/logout">Logout</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">Python Flask App</h3>
+<h3 class="text-muted"><img border="0" alt="ReckonAnalytics" src="images/logo.png" width="150" height="150"></h3>
       </div>
 
 
-    
+
 
 <div class="well">
 
 </div>
-    
+
 
       <footer class="footer">
         <p>&copy; Company 2015</p>
@@ -175,4 +175,3 @@
     </div>
   </body>
 </html>
-
