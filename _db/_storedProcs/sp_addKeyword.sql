@@ -20,7 +20,9 @@ BEGIN
         p_title,
         p_description,
         p_user_id,
-        NOW()
+        NOW()+3
     );
 END$$
  
+DELIMITER ;
+;
