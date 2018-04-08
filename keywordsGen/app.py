@@ -130,7 +130,8 @@ def getAllWishes():
 
 @app.route('/showDashboard')
 def showDashboard():
-    return render_template('dashboard.html')
+    logo_path = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template('dashboard.html', logo=logo_path)
 
 
 @app.route('/showSignin')
