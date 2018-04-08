@@ -45,7 +45,8 @@ app.wsgi_app = StreamConsumingMiddleware(app.wsgi_app)
 
 @app.route('/')
 def main():
-    return render_template('index.html')
+    logo_path = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template('index.html',logo=logo_path)
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -58,11 +59,13 @@ def upload():
 
 @app.route('/showSignUp')
 def showSignUp():
-    return render_template('signup.html')
+    logo_path = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template('signup.html',logo=logo_path)
 
 @app.route('/showAddWish')
 def showAddWish():
-    return render_template('addWish.html')
+    logo_path = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template('addWish.html',logo=logo_path)
 
 @app.route('/addUpdateLike',methods=['POST'])
 def addUpdateLike():
@@ -85,9 +88,9 @@ def addUpdateLike():
                 result = cursor.fetchall()
                 return json.dumps({'status':'OK','total':result[0][0],'likeStatus':result[0][1]})
             else:
-                return render_template('error.html',error = 'An error occurred!')
+                return render_template('error.html',error = 'An error occurred!',logo=logo_path)
         else:
-            return render_template('error.html',error = 'Unauthorized Access')
+            return render_template('error.html',error = 'Unauthorized Access',logo=logo_path)
     except Exception as e:
         return render_template('error.html',error = str(e))
     finally:
@@ -137,16 +140,20 @@ def showDashboard():
 @app.route('/showSignin')
 def showSignin():
     if session.get('user'):
-        return render_template('userHome.html')
+        logo_path = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+        return render_template('userHome.html',logo=logo_path)
     else:
-        return render_template('signin.html')
+        logo_path = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+        return render_template('signin.html',logo=logo_path)
 
 @app.route('/userHome')
 def userHome():
     if session.get('user'):
-        return render_template('userHome.html')
+        logo_path = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+        return render_template('userHome.html',logo=logo_path)
     else:
-        return render_template('error.html',error = 'Unauthorized Access')
+        logo_path = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+        return render_template('error.html',error = 'Unauthorized Access',logo=logo_path)
 
 
 @app.route('/logout')
