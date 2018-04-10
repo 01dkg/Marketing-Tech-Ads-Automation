@@ -15,4 +15,17 @@ CREATE TABLE `tbl_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
 
 
-C
+CREATE TABLE `tbl_keyword` (
+  `keyword_id` int(11) NOT NULL AUTO_INCREMENT,
+  `keyword_title` varchar(45) DEFAULT NULL,
+  `keyword_description` varchar(5000) DEFAULT NULL,
+  `keyword_user_id` int(11) DEFAULT NULL,
+  `keyword_date` datetime DEFAULT NULL,
+  `keyword_file_path` varchar(200) DEFAULT NULL,
+  `keyword_accomplished` int(11) DEFAULT '0',
+  `keyword_private` int(11) DEFAULT '0',
+  PRIMARY KEY (`keyword_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1
+
+
+
