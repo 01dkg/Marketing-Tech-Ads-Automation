@@ -29,3 +29,20 @@ CREATE TABLE `tbl_keyword` (
 
 
 
+CREATE DEFINER=`root`@`localhost` FUNCTION `getSum`(
+    p_keyword_id int
+) RETURNS int(11)
+BEGIN
+    select sum(keyword_Status) into @sm from tbl_status where keyword_id = p_keyword_id;
+RETURN @sm;
+END
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `hasStatus`(
+    p_keyword int,
+    p_user int
+) RETURNS int(11)
+BEGIN
+     
+    select keyword_Status into @myval from tbl_status where keyword_id =  p_keyword and user_id = p_user;
+RETURN @myval;
+END
