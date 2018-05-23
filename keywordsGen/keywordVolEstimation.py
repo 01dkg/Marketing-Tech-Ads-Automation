@@ -117,3 +117,31 @@ def _FormatMean(mean):
     return '%.2f' % mean
   else:
     return 'N/A'
+
+#Function to Display output results from google
+def DisplayEstimate(message, min_estimate, max_estimate):
+  mean_avg_cpc = (_CalculateMean(min_estimate['averageCpc']['microAmount'],
+                                 max_estimate['averageCpc']['microAmount'])
+                  if 'averageCpc' in min_estimate
+                  and min_estimate['averageCpc'] else None)
+  mean_avg_pos = (_CalculateMean(min_estimate['averagePosition'],
+                                 max_estimate['averagePosition'])
+                  if 'averagePosition' in min_estimate
+                  and min_estimate['averagePosition'] else None)
+  mean_clicks = _CalculateMean(min_estimate['clicksPerDay'],
+                               max_estimate['clicksPerDay'])
+  mean_total_cost = _CalculateMean(min_estimate['totalCost']['microAmount'],
+                                   max_estimate['totalCost']['microAmount'])
+
+  print message
+  print '  Estimated average CPC: %s' % _FormatMean(mean_avg_cpc)
+  print '  Estimated ad position: %s' % _FormatMean(mean_avg_pos)
+  print '  Estimated daily clicks: %s' % _FormatMean(mean_clicks)
+  print '  Estimated daily cost: %s' % _FormatMean(mean_total_cost)
+
+
+if __name__ == '__main__':
+  # Initialize client object.
+  adwords_client = adwords.AdWordsClient.LoadFromStorage()
+
+  main(adwords_client)
